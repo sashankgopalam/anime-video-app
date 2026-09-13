@@ -139,7 +139,8 @@ class StableDiffusionProvider:
         if not model_path:
             raise ValueError(
                 "SD_MODEL_PATH is not set. Point it at a local Stable Diffusion "
-                "checkpoint (see README.md) before using the stable_diffusion provider."
+                "checkpoint or a Hugging Face repo id (see README.md for free "
+                "options) before using the stable_diffusion provider."
             )
         self.model_path = model_path
         self._pipe = None
@@ -149,10 +150,19 @@ class StableDiffusionProvider:
             import torch
             from diffusers import StableDiffusionPipeline
 
-            device = "cuda" if torch.cuda.is_available() else "cpu"
+            if torch.cuda.is_available():
+                device = "cuda"
+            elif torch.backends.mps.is_available():  # Apple Silicon GPU
+                device = "mps"
+            else:
+                device = "cpu"
+
+            # fp16 is unreliable on MPS (can produce black images with some
+            # ops) and CPU doesn't support it at all -- only use it on CUDA.
+            dtype = torch.float16 if device == "cuda" else torch.float32
             self._pipe = StableDiffusionPipeline.from_pretrained(
                 self.model_path,
-                torch_dtype=torch.float16 if device == "cuda" else torch.float32,
+                torch_dtype=dtype,
                 safety_checker=None,
             ).to(device)
         return self._pipe
