@@ -1,0 +1,15 @@
+# Optional: install these ONLY once you're ready to switch on real Stable
+# Diffusion anime art (image_gen.py PROVIDER="stable_diffusion") and/or real
+# AnimateDiff motion (motion.py PROVIDER="animatediff"). Needs a GPU for
+# usable speed (local NVIDIA card, or a free Colab/Kaggle GPU session).
+#
+#   pip install -r requirements-gpu.txt
+#
+# For CUDA-enabled torch specifically, follow https://pytorch.org/get-started/locally
+# instead of the plain "torch" below if this pulls a CPU-only build.
+
+torch
+diffusers>=0.27
+transformers>=4.40
+accelerate>=0.30
+safetensors>=0.4

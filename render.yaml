@@ -1,0 +1,17 @@
+# Render Blueprint -- lets Render auto-create the backend service from this
+# repo in one step (Dashboard -> New -> Blueprint -> pick this repo).
+# See README.md "Deploying for free" for the full walkthrough.
+services:
+  - type: web
+    name: anime-video-backend
+    runtime: docker
+    plan: free
+    rootDir: backend
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /api/languages
+    envVars:
+      - key: TTS_LANGUAGE
+        value: te-IN
+      - key: IMAGE_PROVIDER
+        value: mock

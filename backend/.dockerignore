@@ -1,0 +1,5 @@
+venv/
+__pycache__/
+*.pyc
+jobs_storage/*
+!jobs_storage/.gitkeep

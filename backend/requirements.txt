@@ -1,0 +1,12 @@
+# Core requirements -- everything the app needs to run end-to-end with the
+# free, no-GPU defaults (Mock art + Ken Burns motion + edge-tts voice).
+Pillow>=10.0
+edge-tts>=6.1        # free Microsoft neural voices, incl. Telugu (te-IN-*) -- no key needed
+
+# The web server itself uses only the Python standard library (http.server) --
+# no FastAPI/Flask/uvicorn required, so there's nothing else to install here.
+
+# ffmpeg is NOT a pip package -- install it with your OS package manager:
+#   Ubuntu/Debian: sudo apt install ffmpeg
+#   macOS:         brew install ffmpeg
+#   Windows:       https://ffmpeg.org/download.html
